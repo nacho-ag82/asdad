@@ -1,0 +1,118 @@
+<!DOCTYPE html
+	PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<title>Ejercicio 15 - Informaci�n sobre eventos</title>
+	<style type="text/css">
+		body {
+			font-family: arial, helvetica;
+		}
+
+		#info {
+			width: 160px;
+			border: thin solid silver;
+			padding: .5em;
+			position: fixed;
+		}
+
+		#info h1 {
+			margin: 0;
+		}
+	</style>
+	<script type="text/javascript">
+		var boton = 0;
+		var cajaX = 0;
+		var cajaY = 0;
+		function muestraInformacion(mensaje) {
+			document.getElementById("info").innerHTML = '<h1>' + mensaje[0] + '</h1>';
+			for (var i = 1; i < mensaje.length; i++) {
+				document.getElementById("info").innerHTML += '<p>' + mensaje[i] + '</p>';
+
+			}
+		}
+
+		function info(evento) {
+			var mensaje = new Array();
+
+
+			switch (evento.type) {
+				case "keypress":
+					var tecla = evento.keyCode;
+					var div = document.getElementById("info");
+
+					var teclaC = String.fromCharCode(tecla);
+					mensaje[0] = "Teclado";
+					mensaje[1] = "Carácter" + "[" + teclaC + "]";
+					mensaje[2] = "Código" + "[" + tecla + "]";
+					muestraInformacion(mensaje);
+					div.style.backgroundColor = "#CCE6FF";
+					break;
+				case "mousemove":
+					var coordenadaX = evento.clientX;
+					var coordenadaY = evento.clientY;
+					var paginaX = evento.pageX;
+					var paginaY = evento.pageY;
+					var coordenadaPX = document.getElementById("info").style.left;
+					var coordenadaPY = document.getElementById("info").style.top;
+					if(boton==1){
+						console.log(coordenadaX,coordenadaY);
+						console.log(coordenadaPX,coordenadaPY);
+						document.getElementById("info").style.left = (coordenadaX-cajaX)+"px";
+						document.getElementById("info").style.top = (coordenadaY-cajaY)+"px";
+						document.getElementById("info").style.backgroundColor = "#CCCCCC"		
+					}
+					
+					mensaje[0] = "Ratón";
+					mensaje[1] = "Navegador" + "[" + coordenadaX + "," + coordenadaY + "]";
+					mensaje[2] = "Pantalla" + "["+coordenadaPX+","+coordenadaPY+"]"
+					mensaje[3] = "Página" + "[" + paginaX + "," + paginaY + "]";
+					muestraInformacion(mensaje);
+					break;
+				case "click":
+					document.getElementById("info").style.backgroundColor = "#FFFFCC"
+					break;
+				default:
+					break;
+			}
+
+ 
+
+
+
+
+
+
+
+
+		}
+		function inicioMov(){
+			cajaX = event.clientX - document.getElementById("info").style.left.split("px")[0];
+			cajaY = event.clientY- document.getElementById("info").style.top.split("px")[0];
+			boton = 1;
+		}
+		window.onload = function () {
+			document.onmousemove = info;
+			document.onkeypress = info;
+			document.onclick = info;
+			document.getElementById("info").onmousedown = inicioMov;
+
+			
+			document.getElementById("info").onmouseup = function(){
+				boton = 0;
+
+			}
+
+		}
+	</script>
+</head>
+
+<body>
+	<div id="info"></div>
+	<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+	<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+	<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+</body>
+
+</html>
