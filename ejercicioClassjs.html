@@ -38,7 +38,10 @@
 		//  Creamos la clase Ciculo:
 		class Circulo{
             constructor(f=0,c=0,r=0){
-                if(f instanceof Punto){
+				if (f instanceof Circulo){
+					this.punto = f.punto;
+					this.r = f.r;
+				}else if(f instanceof Punto){
                     this.punto=f;
                     this.r=c;
                 }else{
@@ -63,14 +66,26 @@
 
 		class Cilindro{
 			
+			constructor(f=0,c=0,r=0,al=0){
+                if(f instanceof Circulo){
+                    this.circulo= new Circulo(f);
+                    this.a=c;
+                }else if(f instanceof Punto){
+                    this.circulo= new Circulo(f,c);
+                    this.a=r;
+                }else{
+					this.circulo= new Circulo(f,c,r);
+					this.a=al;
+				}
+            }
 			
 			
 			//  Métodos:
 			mostrar() {
-				
+				return this.circulo.mostrar()+", "+this.a;
 			}
 			Volumen() {
-				
+				return (this.circulo.Area()*this.a).toFixed(2);
 			}
 
 		}  //  Cilindro
@@ -99,13 +114,12 @@
 			sal += "Área c2 = " +  c2.Area() + "<br> </p>";
 
 			var cilindro1 = new Cilindro(c1, 10);
-			
 			var cilindro2 = new Cilindro(c2, 15);
 			sal += "<p>Creamos dos Cilindros cilindro1 y cilindro1: <br>";
 			sal += "cilindro1 = " + cilindro1.mostrar() + "<br>";
 			sal += "cilindro2 = " + cilindro2.mostrar() + "<br>";
 			sal += "Volumen cilindro1 = " + cilindro1.Volumen() + "<br>";
-			sal += "Volumen cilindro1 = " + cilindro2.Volumen() + "<br> </p>";
+			sal += "Volumen cilindro2 = " + cilindro2.Volumen() + "<br> </p>";
 			
 			
 			//  EJERCICIO:
